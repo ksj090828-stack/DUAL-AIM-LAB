@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DUAL AIM LAB 3D V11</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <canvas id="game" width="1280" height="720"></canvas>
+
+  <div id="hud" class="hud hidden">
+    <div><span>모드</span><strong id="hudMode">-</strong></div>
+    <div><span>점수</span><strong id="hudScore">0</strong></div>
+    <div><span>명중률</span><strong id="hudAcc">0%</strong></div>
+    <div><span>남은 시간</span><strong id="hudTime">30.0</strong></div>
+    <button id="pauseBtn">일시정지</button>
+  </div>
+
+  <div id="menu" class="overlay show">
+    <div class="panel menu-panel">
+      <p class="eyebrow">FPS + MOBA SKILLSHOT TRAINER</p>
+      <h1>DUAL AIM LAB 3D V11</h1>
+      <p class="subtitle">FPS 에임과 MOBA 스킬샷을 하나의 프로그램에서 연습하세요.</p>
+
+      <div class="mode-tabs three-tabs">
+        <button class="mode-tab active" data-category="fps">FPS 에임</button>
+        <button class="mode-tab" data-category="moba">MOBA 스킬샷</button>
+        <button class="mode-tab" data-category="arena3d">3D 아레나</button>
+      </div>
+
+      <div id="fpsModes" class="mode-grid">
+        <button class="mode-card active" data-mode="flick"><b>플릭 샷</b><span>무작위 표적을 빠르게 클릭</span></button>
+        <button class="mode-card" data-mode="tracking"><b>트래킹</b><span>움직이는 표적을 따라가며 클릭 유지</span></button>
+        <button class="mode-card" data-mode="reaction"><b>반응속도</b><span>표적이 나타난 순간 빠르게 반응</span></button>
+      </div>
+
+      <div id="mobaModes" class="mode-grid hidden">
+        <button class="mode-card" data-mode="line"><b>직선 스킬샷</b><span>움직이는 적의 이동 경로를 예측</span></button>
+        <button class="mode-card" data-mode="circle"><b>원형 스킬샷</b><span>AI 회피 무빙을 예측해 범위기를 배치</span></button>
+        <button class="mode-card" data-mode="dodge"><b>회피 연습</b><span>WASD 또는 클릭 이동으로 스킬 회피</span></button>
+      </div>
+
+      <div id="arena3dModes" class="mode-grid hidden">
+        <button class="mode-card active" data-mode="arena3dStatic">
+          <b>3D 고정 표적</b>
+          <span>멀리 있는 고정 표적을 정확하게 조준</span>
+        </button>
+        <button class="mode-card" data-mode="arena3dMoving">
+          <b>3D 이동 표적</b>
+          <span>거리에 따라 크기가 달라지는 움직이는 표적을 추적</span>
+        </button>
+      </div>
+
+      <div class="settings-grid">
+        <label>연습 시간
+          <select id="duration"><option value="30">30초</option><option value="60">60초</option><option value="90">90초</option></select>
+        </label>
+        <label>난이도
+          <select id="difficulty"><option value="easy">쉬움</option><option value="normal" selected>보통</option><option value="hard">어려움</option></select>
+        </label>
+        <label>DPI
+          <input id="mouseDpi" type="number" min="100" max="6400" step="50" value="800">
+          <small class="setting-hint">사용 중인 마우스 DPI</small>
+        </label>
+        <label>게임 감도
+          <input id="mouseSensitivity" type="number" min="0.05" max="5" step="0.05" value="1.00">
+          <small class="setting-hint">기준: 800 DPI × 1.00</small>
+        </label>
+        <label>조준점 크기
+          <input id="crosshairSize" type="range" min="4" max="20" value="9">
+        </label>
+        <label>조준점 색상
+          <input id="crosshairColor" type="color" value="#ffffff">
+        </label>
+        <label>표적 색상
+          <input id="targetColor" type="color" value="#67e8f9">
+        </label>
+        <label>배경
+          <select id="backgroundTheme">
+            <option value="dark">어두운 배경</option>
+            <option value="white">흰색 배경</option>
+            <option value="blue">푸른 배경</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="pointer-hint">게임 시작 시 마우스가 화면에 고정됩니다. ESC로 해제하고 화면을 클릭하면 다시 고정됩니다.</p>
+        <button id="startBtn" class="primary">연습 시작</button>
+      <p id="bestText" class="best">최고 기록 없음</p>
+    </div>
+  </div>
+
+  <div id="pause" class="overlay">
+    <div class="panel small-panel">
+      <h2>일시정지</h2>
+      <button id="resumeBtn" class="primary">계속하기</button>
+      <button id="menuBtn" class="secondary">메인 메뉴</button>
+    </div>
+  </div>
+
+  <div id="result" class="overlay">
+    <div class="panel result-panel">
+      <p class="eyebrow">TRAINING RESULT</p>
+      <h2 id="resultTitle">연습 결과</h2>
+      <div id="resultGrid" class="result-grid"></div>
+      <p id="resultComment" class="comment"></p>
+      <button id="retryBtn" class="primary">다시 연습</button>
+      <button id="resultMenuBtn" class="secondary">메인 메뉴</button>
+    </div>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>
